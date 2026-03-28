@@ -1,35 +1,32 @@
-cmake_minimum_required( VERSION 3.10 )
-set ( CMAKE_BUILD_TYPE Release )
-#add_definitions ( -Wall )
-add_definitions(-DDROIDCRAFT_LIBRARY ${QT_DEFINITIONS} -DQT_PLUGIN -DQT_SHARED)
-find_package ( Qt6 REQUIRED )
+cmake_minimum_required(VERSION 3.16)
 
-include_directories (
-	${CMAKE_CURRENT_SOURCE_DIR}/../../tiled
-	${CMAKE_CURRENT_SOURCE_DIR}/../../libtiled
-	${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
-	${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR}
-	)
-set ( droidcraft_HDRS
-	droidcraft_global.h
-	)
+project(droidcraft LANGUAGES CXX)
 
-set ( droidcraft_SRCS
-	droidcraftplugin.cpp
-	)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui)
 
-set ( droidcraft_RSCS
-	droidcraft.qrc
-	)
+qt_add_library(droidcraft SHARED
+    droidcraftplugin.cpp
+    droidcraftplugin.h
+    droidcraft_global.h
+    droidcraft.qrc
+)
 
-qt_add_resources(RSCS ${droidcraft_RSCS})
+target_compile_definitions(droidcraft PRIVATE
+    DROIDCRAFT_LIBRARY
+)
 
-set ( droidcraft_MOCS
-	droidcraftplugin.h
-	)
-qt_add_resources(MOCS ${droidcraft_MOCS})
+target_include_directories(droidcraft PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/src/tiled
+)
 
-add_library ( droidcraft SHARED ${droidcraft_SRCS} ${UIS} ${RSCS} ${TRS} ${MOCS} )
-target_link_libraries ( droidcraft libtiled ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} )
+target_link_libraries(droidcraft PRIVATE
+    libtiled
+    Qt6::Core
+    Qt6::Gui
+)
 
-INSTALL(TARGETS droidcraft RUNTIME DESTINATION plugins/tiled LIBRARY DESTINATION plugins/tiled)
+install(TARGETS droidcraft
+    RUNTIME DESTINATION plugins/tiled
+    LIBRARY DESTINATION plugins/tiled
+)
