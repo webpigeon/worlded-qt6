@@ -1,31 +1,31 @@
-cmake_minimum_required( VERSION 3.10 )
-set ( CMAKE_BUILD_TYPE Release )
-#add_definitions ( -Wall )
-add_definitions( -DREPLICAISLAND_LIBRARY )
-find_package ( Qt6 REQUIRED )
-include_directories (
-	${CMAKE_CURRENT_SOURCE_DIR}/../../tiled
-	${CMAKE_CURRENT_SOURCE_DIR}/../../libtiled
-	${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
-	${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR}
-	)
-set ( replicaisland_HDRS
-	replicaisland_global.h
-	)
+cmake_minimum_required(VERSION 3.16)
 
-set ( replicaisland_SRCS
-	replicaislandplugin.cpp
-	)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui)
 
-set ( replicaisland_RSCS
-	replicaisland.qrc
-	)
-qt_add_resources(RSCS ${replicaisland_RSCS})
+qt_add_library(replicaisland SHARED
+    replicaislandplugin.cpp
+    replicaislandplugin.h
+    replicaisland_global.h
+    replicaisland.qrc
+)
 
-set ( replicaisland_MOCS
-	replicaislandplugin.h
-	)
-qt_add_resources(MOCS ${replicaisland_MOCS})
+target_compile_definitions(replicaisland PRIVATE
+    REPLICAISLAND_LIBRARY
+)
 
-add_library ( replicaisland SHARED ${replicaisland_SRCS} ${UIS} ${RSCS} ${TRS} ${MOCS} )
-target_link_libraries ( replicaisland libtiled ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} )
+target_include_directories(replicaisland PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/src/tiled
+    ${CMAKE_SOURCE_DIR}/src/libtiled
+)
+
+target_link_libraries(replicaisland PRIVATE
+    libtiled
+    Qt6::Core
+    Qt6::Gui
+)
+
+install(TARGETS replicaisland
+    RUNTIME DESTINATION plugins/tiled
+    LIBRARY DESTINATION plugins/tiled
+)

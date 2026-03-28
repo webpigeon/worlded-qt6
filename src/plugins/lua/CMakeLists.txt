@@ -27,7 +27,11 @@ qt_add_library ( luaplugin SHARED
 target_compile_definitions(luaplugin PRIVATE LUA_LIBRARY )
 
 target_link_libraries ( luaplugin PRIVATE libtiled Qt6::Core Qt6::Gui )
-target_include_directories ( luaplugin PRIVATE ${CMAKE_SOURCE_DIR} )
+target_include_directories ( luaplugin 
+    PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/src/tiled
+)
 
 INSTALL(TARGETS luaplugin
     RUNTIME DESTINATION plugins/tiled 

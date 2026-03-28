@@ -1,37 +1,30 @@
-project( automappingconverter )
-cmake_minimum_required( VERSION 3.10 )
-set ( CMAKE_BUILD_TYPE Release )
-#add_definitions ( -Wall )
+cmake_minimum_required(VERSION 3.16)
 
-find_package ( Qt6 REQUIRED )
+project(automappingconverter LANGUAGES CXX)
+
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
+
 qt_standard_project_setup()
 
-include_directories (
-	${CMAKE_CURRENT_SOURCE_DIR}/../libtiled
-	${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
-	)
-#set ( EXECUTABLE_OUTPUT_PATH ../../bin )
-set ( automappingconverter_HDRS
-	convertercontrol.h
-	)
+qt_add_executable(automappingconverter
+    main.cpp
+    convertercontrol.cpp
+    convertercontrol.h
+    converterdatamodel.cpp
+    converterdatamodel.h
+    converterwindow.cpp
+    converterwindow.h
+    converterwindow.ui
+)
 
-set ( automappingconverter_SRCS
-	main.cpp
-	converterdatamodel.cpp
-	convertercontrol.cpp
-	converterwindow.cpp
-	)
+target_include_directories(automappingconverter PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/src/libtiled
+)
 
-set ( automappingconverter_UIS
-	converterwindow.ui
-	)
-qt_wrap_ui(UIS ${automappingconverter_UIS})
-
-set ( automappingconverter_MOCS
-	converterdatamodel.h
-	converterwindow.h
-	)
-qt_wrap_cpp(MOCS ${automappingconverter_MOCS})
-
-qt_add_executable ( automappingconverter ${automappingconverter_SRCS} ${UIS} ${RSCS} ${TRS} )
-target_link_libraries ( automappingconverter PRIVATE libtiled Qt6::Core Qt6::Gui )
+target_link_libraries(automappingconverter PRIVATE
+    libtiled
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+)
