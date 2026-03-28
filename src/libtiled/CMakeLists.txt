@@ -1,13 +1,15 @@
-project( libtiled )
-cmake_minimum_required( VERSION 2.6 )
+cmake_minimum_required( VERSION 3.16 )
+
+project(libtiled LANGUAGES CXX)
 set ( CMAKE_BUILD_TYPE Release )
 #add_definitions ( -Wall )
-add_definitions( -DTILED_LIBRARY )
-find_package ( Qt4 REQUIRED )
-include ( ${QT_USE_FILE} )
+
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
+
+qt_standard_project_setup()
+
 include_directories (
 	${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
-	${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR}
 	../zlib)
 
 set ( tiled_HDRS
@@ -50,6 +52,7 @@ set ( tiled_SRCS
 	properties.cpp
 	staggeredrenderer.cpp
 	tilelayer.cpp
+    tile.cpp
 	tileset.cpp
 	gidmapper.cpp
 
@@ -57,7 +60,9 @@ set ( tiled_SRCS
 	ztilelayergroup.cpp
 	)
 
-add_library ( libtiled SHARED ${tiled_SRCS} ${tiled_HDRS} ${UIS} ${RSCS} ${TRS} ${MOCS} )
-target_link_libraries ( libtiled  ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} )
+add_library ( libtiled SHARED ${tiled_SRCS} ${tiled_HDRS} )
+target_link_libraries ( libtiled  Qt6::Core Qt6::Widgets qtlockedfile )
+target_include_directories(libtiled PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} )
+target_compile_definitions(libtiled PRIVATE TILED_LIBRARY)
 
 INSTALL(TARGETS libtiled RUNTIME DESTINATION "." LIBRARY DESTINATION ".")

@@ -48,6 +48,7 @@
 #include <QFileInfo>
 #ifdef ZOMBOID
 #include <QImageReader>
+
 #include "qtlockedfile.h"
 using namespace SharedTools;
 #endif

@@ -15,7 +15,7 @@ set(TRS
 	tiled_de.ts
 	tiled_ja.ts
 )
-QT4_ADD_TRANSLATION(_qm_files ${TRS})
+qt6_add_translations(_qm_files ${TRS})
 
 add_custom_target(translations_target SOURCES ${_qm_files})
 add_dependencies(TileZed translations_target)
