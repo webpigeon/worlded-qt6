@@ -1,12 +1,21 @@
+cmake_minimum_required( VERSION 3.10 )
+
 project( TileZed )
-cmake_minimum_required( VERSION 2.6 )
 set ( CMAKE_BUILD_TYPE Release )
+
 #add_definitions ( -Wall )
-find_package ( Qt4 REQUIRED )
-include ( ${QT_USE_FILE} )
+find_package ( Qt6 REQUIRED COMPONENTS Core LinguistTools Widgets Network)
+
+add_subdirectory(src/qtsingleapplication)
+add_subdirectory(src/qtlockedfile)
+
+qt_standard_project_setup()
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 include_directories (
 	${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
-	${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR}
 	)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/Debug)
@@ -17,7 +26,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_BINARY_DIR}/RelWithDeb
 add_definitions( -DZOMBOID )
 
 add_subdirectory( src )
-add_subdirectory( translations )
+#add_subdirectory( translations )
 
 install(FILES AUTHORS DESTINATION . RENAME AUTHORS.txt)
 install(FILES COPYING DESTINATION . RENAME COPYING.txt)

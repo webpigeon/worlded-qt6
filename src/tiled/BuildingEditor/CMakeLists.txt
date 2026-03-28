@@ -15,8 +15,6 @@ set ( BuildingEd_UIS
     templatefrombuildingdialog.ui
 )
 
-QT4_WRAP_UI ( localUIS ${BuildingEd_UIS} )
-
 set ( BuildingEd_HDRS
     simplefile.h
     building.h
@@ -33,20 +31,25 @@ set ( BuildingEd_HDRS
 set ( BuildingEd_SRCS
     building.cpp
     buildingdocument.cpp
+    buildingdocumentmgr.cpp
     buildingeditorwindow.cpp
     buildingfloor.cpp
     buildingfloorsdialog.cpp
     buildingfurnituredock.cpp
     buildingisoview.cpp
+    buildingkeyvaluesdialog.cpp
     buildinglayersdock.cpp
     buildingmap.cpp
     buildingobjects.cpp
     buildingorthoview.cpp
     buildingpreferences.cpp
     buildingpreferencesdialog.cpp
+    buildingpropertiesdialog.cpp
     buildingreader.cpp
+    buildingroomdef.cpp
     buildingtemplates.cpp
     buildingtemplatesdialog.cpp
+    buildingtileentryview.cpp
     buildingtiles.cpp
     buildingtilesdialog.cpp
     buildingtilesetdock.cpp
@@ -55,19 +58,31 @@ set ( BuildingEd_SRCS
     buildingtools.cpp
     buildingundoredo.cpp
     buildingwriter.cpp
+    categorydock.cpp
     choosebuildingtiledialog.cpp
     choosetemplatesdialog.cpp
+    editmodestatusbar.cpp
+    embeddedmainwindow.cpp
+    fancytabwidget.cpp
     furnituregroups.cpp
     furnitureview.cpp
     horizontallinedelegate.cpp
+    imode.cpp
     listofstringsdialog.cpp
     mixedtilesetview.cpp
     newbuildingdialog.cpp
+    objecteditmode.cpp
     resizebuildingdialog.cpp
+    roofhiding.cpp
     roomsdialog.cpp
     simplefile.cpp
     templatefrombuildingdialog.cpp
     tilecategoryview.cpp
+    tileeditmode.cpp
+    welcomemode.cpp
+
+    utils/stylehelper.cpp
+    utils/styledbar.cpp
 )
 
 set ( BuildingEd_MOCS
@@ -98,20 +113,48 @@ set ( BuildingEd_MOCS
     roomsdialog.h
     templatefrombuildingdialog.h
     tilecategoryview.h
+
+    buildingdocumentmgr.h
+    imode.h
+    welcomemode.h
+    objecteditmode.h
+    tileeditmode.h
+
+    utils/stylehelper.h
+    utils/styledbar.h
 )
 
-QT4_WRAP_CPP ( localMOCS ${BuildingEd_MOCS} )
+#qt_wrap_cpp ( localMOCS ${BuildingEd_MOCS} )
 
 # Because these resources are part of a static library, the macro 
 # Q_INIT_RESOURCES must be placed in the C++ main() function, otherwise the
 # resources won't get linked in.
-QT4_ADD_RESOURCES ( localRSCS buildingeditor.qrc )
+qt_add_resources ( localRSCS buildingeditor.qrc )
 
 # Find generated ui_xxx.h files in the build directory
-include_directories ( ${CMAKE_CURRENT_BINARY_DIR} )
+#include_directories ( ${CMAKE_CURRENT_BINARY_DIR} )
 
-add_library ( BuildingEd STATIC ${BuildingEd_SRCS} ${BuildingEd_HDRS}
-              ${BuildingEd_MOCS} ${localUIS} ${localMOCS} ${localRSCS} )
+qt_add_library( BuildingEd STATIC 
+    ${BuildingEd_SRCS} 
+    ${BuildingEd_HDRS}
+    ${BuildingEd_MOCS}
+    ${BuildingEd_UIS}
+    ${localRSCS}
+)
+
+target_include_directories(BuildingEd PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/..
+)
+
+target_link_libraries( BuildingEd 
+    Qt6::Core 
+    Qt6::Gui 
+    Qt6::Widgets 
+    qtlockedfile
+    libtiled
+)
+
 
 file ( COPY BuildingFurniture.txt BuildingTemplates.txt BuildingTiles.txt
           TMXConfig.txt DESTINATION ${CMAKE_BINARY_DIR}/Debug )

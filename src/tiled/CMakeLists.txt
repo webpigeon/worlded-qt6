@@ -1,15 +1,13 @@
-project( TileZed )
-cmake_minimum_required( VERSION 2.6 )
+cmake_minimum_required( VERSION 3.16 )
+
+project( TileZed LANGUAGES CXX )
 set ( CMAKE_BUILD_TYPE Release )
+
 #add_definitions ( -Wall )
 add_definitions( -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII )
-find_package ( Qt4 REQUIRED )
-include ( ${QT_USE_FILE} )
-include_directories (
-	../libtiled
-	${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
-	${QT_QTOPENGL_INCLUDE_DIR} ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR}
-	)
+
+find_package ( Qt6 REQUIRED COMPONENTS Core Gui Widgets OpenGLWidgets )
+
 #set ( EXECUTABLE_OUTPUT_PATH ../../bin )
 set ( Tiled_HDRS
 	addremovelayer.h
@@ -61,6 +59,142 @@ set ( Tiled_HDRS
 	)
 
 set ( Tiled_SRCS
+bmpclipboard.cpp
+bmpclipboard.h
+bmptool.cpp
+bmptool.h
+bmptooldialog.cpp
+bmptooldialog.h
+bmptooldialog.ui
+picktiletool.cpp
+picktiletool.h
+roomdeftool.cpp
+roomdeftool.h
+tilelayerspanel.cpp
+tilelayerspanel.h
+worldlottool.cpp
+worldlottool.h
+tilesetstxtfile.cpp
+tilesetstxtfile.h
+ZomboidScene.cpp
+ZomboidScene.h
+bmpblender.cpp
+bmpblender.h
+
+tiledefcompare.h
+tiledefcompare.cpp
+tiledefcompare.ui
+
+texturepacker.cpp
+texturepacker.h
+
+packviewer.h
+packviewer.cpp
+packviewer.ui
+
+roomdefecator.h
+roomdefecator.cpp
+
+luaconsole.cpp
+luaconsole.h
+luaconsole.ui
+luamapsdialog.cpp
+luamapsdialog.h
+luamapsdialog.ui
+
+luatooldialog.ui
+luatooldialog.cpp
+luatooldialog.h
+luatooloptions.cpp
+luatooloptions.h
+
+luatiletool.h
+luatiletool.cpp
+luatiled.cpp
+luatiled.h
+
+snoweditor.h
+snoweditor.cpp
+snoweditor.ui
+
+threads.h
+threads.cpp
+
+packcompare.cpp
+packcompare.h
+packcompare.ui
+
+tileoverlayfile.cpp
+tileoverlayfile.h
+
+enflatulatordialog.ui
+enflatulatordialog.h
+enflatulatordialog.cpp
+
+containeroverlayfile.cpp
+containeroverlayfile.h
+containeroverlayview.cpp
+containeroverlayview.h
+containeroverlaydialog.cpp
+containeroverlaydialog.h
+
+checkmapswindow.cpp
+checkmapswindow.h
+checkmapswindow.ui
+
+bmpruleview.cpp
+bmpruleview.h
+
+bmpblendview.cpp
+bmpblendview.h
+mapbuildings.cpp
+mapbuildings.h
+
+luatable.cpp
+luatable.h
+
+packextractdialog.h
+packextractdialog.ui
+packextractdialog.cpp
+
+roomdefnamedialog.cpp
+roomdefnamedialog.h
+roomdefnamedialog.ui
+
+createpackdialog.cpp
+createpackdialog.ui
+createpackdialog.h
+
+texturepackfile.cpp
+texturepackfile.h
+
+tilesetmanager.cpp
+tilesetmanager.h
+newmapbinaryfile.cpp
+newmapbinaryfile.h
+
+luaworlddialog.h
+luaworlddialog.cpp
+luaworlddialog.ui
+
+rearrangetiles.h
+rearrangetiles.cpp
+rearrangetiles.ui
+
+worldeddock.cpp
+worldeddock.h
+worldeddock.ui
+
+tilesetstxtfile.h
+tilesetstxtfile.cpp
+
+checkbuildingswindow.cpp
+checkbuildingswindow.h
+checkbuildingswindow.ui
+
+tileoverlaydialog.cpp
+tileoverlaydialog.h
+
 	aboutdialog.cpp
 	abstractobjecttool.cpp
 	abstracttiletool.cpp
@@ -195,15 +329,6 @@ set ( Tiled_UIS
 	tiledefdialog.ui
 	tilemetainfodialog.ui
 	)
-QT4_WRAP_UI(UIS ${Tiled_UIS})
-
-# uic needs to find colorbutton.h
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
-set ( Tiled_RSCS
-	tiled.qrc
-	)
-QT4_ADD_RESOURCES(RSCS ${Tiled_RSCS})
 
 set ( Tiled_MOCS
 	aboutdialog.h
@@ -279,21 +404,48 @@ set ( Tiled_MOCS
 	ZomboidScene.h
 	zprogress.h
 	)
-QT4_WRAP_CPP(MOCS ${Tiled_MOCS})
-
-QT4_GET_MOC_FLAGS(_moc_INCS)
-GET_FILENAME_COMPONENT(_abs_FILE toolmanager.cpp ABSOLUTE)
-#GET_FILENAME_COMPONENT(_abs_PATH ${_abs_FILE} PATH)
-set(_current_MOC toolmanager.moc)
-SET(_moc    ${CMAKE_CURRENT_BINARY_DIR}/${_current_MOC})
-QT4_CREATE_MOC_COMMAND(${_abs_FILE} ${_moc} "${_moc_INCS}" "")
-MACRO_ADD_FILE_DEPENDENCIES(${_abs_FILE} ${_moc})
 
 set(ALL_HDRS ${Tiled_HDRS} ${Tiled_MOCS})
 
 add_subdirectory( BuildingEditor )
 
-add_executable ( TileZed ${Tiled_SRCS} tiled.rc ${UIS} ${RSCS} ${TRS} ${MOCS} ${ALL_HDRS} )
-target_link_libraries ( TileZed BuildingEd libtiled ${QT_QTOPENGL_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} )
+qt_add_executable (TileZed
+    ${Tiled_SRCS}
+    ${Tiled_HDRS}
+    ${Tiled_MOCS}
+    ${Tiled_UIS}
+    tiled.qrc
+    tiled.rc)
+
+target_include_directories(TileZed PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_link_libraries ( TileZed PRIVATE 
+    libtiled
+    BuildingEd
+    worlded
+    tolua
+    qtsingleapplication
+    Qt6::Core 
+    Qt6::Gui 
+    Qt6::Widgets 
+    Qt6::OpenGLWidgets)
 
 INSTALL(TARGETS TileZed DESTINATION ".")
+
+set(LUATILED_GENERATED ${CMAKE_CURRENT_BINARY_DIR}/luatiled.tolua.cpp)
+
+add_custom_command(
+    OUTPUT ${LUATILED_GENERATED}
+    COMMAND $<TARGET_FILE:tolua_generator> -n tiled -o ${LUATILED_GENERATED} ${CMAKE_CURRENT_SOURCE_DIR}/luatiled.pkg
+    DEPENDS
+        tolua_generator
+        ${CMAKE_CURRENT_SOURCE_DIR}/luatiled.pkg
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    VERBATIM
+)
+
+target_sources(TileZed PRIVATE
+    ${LUATILED_GENERATED}
+)
