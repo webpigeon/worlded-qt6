@@ -44,6 +44,7 @@
 #include <QToolBar>
 #include <QToolButton>
 #include <QUndoGroup>
+#include <QUndoStack>
 
 using namespace BuildingEditor;
 

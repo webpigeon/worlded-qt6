@@ -20,8 +20,11 @@
 
 #include "BuildingEditor/buildingdocument.h"
 #include "BuildingEditor/templatedocument.h"
+#include "BuildingEditor/roomname.h"
+
 #include <QDialog>
 #include <QMap>
+#include <QUndoGroup>
 
 #include <set>
 
@@ -40,14 +43,6 @@ class BuildingTemplatesDialog;
 class BuildingTileEntry;
 class Room;
 class TemplateDocument;
-
-class RoomName
-{
-public:
-    QString label;
-    QString internalName;
-    QColor color;
-};
 
 extern bool compareQColors(const QColor& a, const QColor& b);
 
