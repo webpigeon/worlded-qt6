@@ -9,7 +9,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 qt_standard_project_setup()
 
 include_directories (
-	${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
+	${CMAKE_SOURCE_DIR}
 	../zlib)
 
 set ( tiled_HDRS
@@ -32,12 +32,19 @@ set ( tiled_HDRS
 	tilelayer.h
 	tileset.h
 	gidmapper.h
+    customtilesize.h
+
+    maplevel.h
+    propertiesgrid.h
 
 	zlevelrenderer.h
 	ztilelayergroup.h
 	)
 
 set ( tiled_SRCS
+    maplevel.cpp
+    propertiesgrid.cpp
+
 	compression.cpp
 	imagelayer.cpp
 	isometricrenderer.cpp
@@ -56,11 +63,12 @@ set ( tiled_SRCS
 	tileset.cpp
 	gidmapper.cpp
 
+    customtilesize.cpp
 	zlevelrenderer.cpp
 	ztilelayergroup.cpp
 	)
 
-add_library ( libtiled SHARED ${tiled_SRCS} ${tiled_HDRS} )
+qt_add_library ( libtiled SHARED ${tiled_SRCS} ${tiled_HDRS} )
 target_link_libraries ( libtiled  Qt6::Core Qt6::Widgets qtlockedfile )
 target_include_directories(libtiled PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} )
 target_compile_definitions(libtiled PRIVATE TILED_LIBRARY)

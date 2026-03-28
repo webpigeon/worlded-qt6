@@ -81,6 +81,23 @@ ZomboidScene.h
 bmpblender.cpp
 bmpblender.h
 
+tiledeftextfile.cpp
+tiledeftextfile.h
+
+shortcut/actionmanager.cpp
+shortcut/actionmanager.h
+shortcut/keyboardshortcutfile.cpp
+shortcut/keyboardshortcutfile.h
+shortcut/keyboardshortcutwindow.cpp
+shortcut/keyboardshortcutwindow.h
+shortcut/keyboardshortcutwindow.ui
+shortcut/shortcuteditordelegate.cpp
+shortcut/shortcuteditordelegate.h
+shortcut/shortcuteditormodel.cpp
+shortcut/shortcuteditormodel.h
+shortcut/shortcuteditorwidget.cpp
+shortcut/shortcuteditorwidget.h
+
 tiledefcompare.h
 tiledefcompare.cpp
 tiledefcompare.ui
@@ -308,6 +325,7 @@ tileoverlaydialog.h
 	ZomboidScene.cpp
 	zprogress.cpp
 	ztilelayergroupitem.cpp
+    shortcut/actionmanager.cpp
 	)
 
 set ( Tiled_UIS

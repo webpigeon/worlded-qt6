@@ -13,11 +13,15 @@ set ( BuildingEd_UIS
     resizebuildingdialog.ui
     roomsdialog.ui
     templatefrombuildingdialog.ui
+    exportbasementsdialog.ui
+    buildingtemplatesdialog.ui
+    buildingattributesdock.ui
 )
 
 set ( BuildingEd_HDRS
     simplefile.h
     building.h
+    buildingmap.h
     buildingfloor.h
     buildingundoredo.h
     buildingobjects.h
@@ -26,16 +30,27 @@ set ( BuildingEd_HDRS
     buildingtmx.h
     horizontallinedelegate.h
     listofstringsdialog.h
+    buildingtilesfile.h
+    attributeeditmode.h
+    attributeeditmode_p.h
+    buildingtemplatesdialog.h
+    buildingattributesdock.h
 )
 
 set ( BuildingEd_SRCS
     building.cpp
+    buildingmap.cpp
     buildingdocument.cpp
+    buildingattributesdock.cpp
+    buildingtemplatesdialog.cpp
     buildingdocumentmgr.cpp
     buildingeditorwindow.cpp
+    exportbasementsdialog.cpp
+    buildingtilesfile.cpp
     buildingfloor.cpp
     buildingfloorsdialog.cpp
     buildingfurnituredock.cpp
+    buildingfurniturefile.cpp
     buildingisoview.cpp
     buildingkeyvaluesdialog.cpp
     buildinglayersdock.cpp
@@ -81,15 +96,31 @@ set ( BuildingEd_SRCS
     tileeditmode.cpp
     welcomemode.cpp
 
+    templatedocument.cpp
+    templatedocument.h
+    templateundoredo.h
+    templateundoredo.cpp
+
+    buildingtemplatesdialog.cpp
+    buildingtemplatesdialog.h
+    buildingtemplatesdialog.ui
+
+    attributeeditmode.cpp
+    attributeeditmode_p.cpp
     utils/stylehelper.cpp
     utils/styledbar.cpp
+
+    templateroomsdialog.cpp
+    templateroomsdialog.h
 )
 
 set ( BuildingEd_MOCS
+    exportbasementsdialog.h
     buildingdocument.h
     buildingeditorwindow.h
     buildingfloorsdialog.h
     buildingfurnituredock.h
+    buildingfurniturefile.h
     buildingisoview.h
     buildinglayersdock.h
     buildingmap.h
@@ -110,10 +141,11 @@ set ( BuildingEd_MOCS
     mixedtilesetview.h
     newbuildingdialog.h
     resizebuildingdialog.h
-    roomsdialog.h
+    #roomsdialog.h
     templatefrombuildingdialog.h
     tilecategoryview.h
 
+    attributeeditmode.h
     buildingdocumentmgr.h
     imode.h
     welcomemode.h
