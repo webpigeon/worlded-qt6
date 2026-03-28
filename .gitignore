@@ -30,3 +30,4 @@ tests/test_mapreader
 #bin
 
 *.bak
+data/
