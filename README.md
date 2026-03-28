@@ -32,18 +32,9 @@ Make sure the Qt (>= 4.6) development libraries are installed:
 
 Now you can compile by running:
 
-    $ qmake (or qmake-qt4 on some systems, like Fedora)
-    $ make
+    $ cmake -B build
+    $ cmake --build build
 
-To do a shadow build, you can run qmake from a different directory and refer
-it to tiled.pro, for example:
-
-    $ mkdir build
-    $ cd build
-    $ qmake ../tiled.pro
-    $ make
-
-You can now simply run Tiled using bin/tiled.
 
 Installing
 -------------------------------------------------------------------------------
