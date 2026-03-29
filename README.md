@@ -26,7 +26,7 @@ Compiling
 
 Make sure the Qt6 development libraries are installed:
 
-* In Fedora:        `dnf install pkgconfig(qt)`
+* In Fedora:        `dnf install "pkgconfig(qt)"`
 
 Now you can compile by running:
 
