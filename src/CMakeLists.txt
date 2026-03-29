@@ -7,11 +7,13 @@ include_directories (
 	${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
 	)
 
-add_subdirectory( libtiled )
-add_subdirectory( worlded )
 
 add_subdirectory( lua )
 add_subdirectory( tolua )
+
+add_subdirectory( config )
+add_subdirectory( libtiled )
+add_subdirectory( worlded )
 add_subdirectory( tiled )
 add_subdirectory( plugins )
 add_subdirectory( tmxviewer )
