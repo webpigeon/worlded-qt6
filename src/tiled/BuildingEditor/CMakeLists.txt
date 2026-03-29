@@ -161,7 +161,7 @@ set ( BuildingEd_MOCS
 # Because these resources are part of a static library, the macro 
 # Q_INIT_RESOURCES must be placed in the C++ main() function, otherwise the
 # resources won't get linked in.
-qt_add_resources ( localRSCS buildingeditor.qrc )
+qt_add_resources ( BuildingEd_Res buildingeditor.qrc )
 
 # Find generated ui_xxx.h files in the build directory
 #include_directories ( ${CMAKE_CURRENT_BINARY_DIR} )
@@ -171,7 +171,7 @@ qt_add_library( BuildingEd STATIC
     ${BuildingEd_HDRS}
     ${BuildingEd_MOCS}
     ${BuildingEd_UIS}
-    ${localRSCS}
+    ${BuildingEd_Res}
 )
 
 target_include_directories(BuildingEd PRIVATE

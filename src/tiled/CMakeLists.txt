@@ -427,13 +427,21 @@ set(ALL_HDRS ${Tiled_HDRS} ${Tiled_MOCS})
 
 add_subdirectory( BuildingEditor )
 
+qt_add_resources( TileZed_res
+    tiled.qrc
+    breeze/breeze.qrc
+    qdarkstyle/dark/darkstyle.qrc
+    qdarkstyle/light/lightstyle.qrc
+)
+
 qt_add_executable (TileZed
     ${Tiled_SRCS}
     ${Tiled_HDRS}
     ${Tiled_MOCS}
     ${Tiled_UIS}
-    tiled.qrc
-    tiled.rc)
+    ${TileZed_res}
+    tiled.rc
+)
 
 target_include_directories(TileZed PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
